@@ -52,6 +52,9 @@ pcall(function()
     RedirectButton.TextSize = 16
     RedirectButton.Font = Enum.Font.Gotham
     RedirectButton.BorderSizePixel = 0
+    RedirectButton.Active = true
+    RedirectButton.Selectable = true
+    RedirectButton.ZIndex = 10
     RedirectButton.Parent = MainFrame
     
     -- Add corner radius to button
@@ -68,23 +71,63 @@ pcall(function()
         RedirectButton.BackgroundColor3 = Color3.fromRGB(0, 162, 255)
     end)
     
-    -- Button click handler
-    RedirectButton.MouseButton1Click:Connect(function()
-        -- Try to open browser window (works in most executors)
-        pcall(function()
-            game:GetService("StarterGui"):SetCore("OpenBrowserWindow", "https://robloxscripts.world/")
+    -- Function to handle button click
+    local function openWebsite()
+        local url = "https://robloxscripts.world/"
+        
+        -- Visual feedback
+        RedirectButton.Text = "Opening..."
+        wait(0.1)
+        
+        -- Method 1: OpenBrowserWindow (most common)
+        local success1 = pcall(function()
+            game:GetService("StarterGui"):SetCore("OpenBrowserWindow", url)
         end)
         
-        -- Alternative method for some executors
-        pcall(function()
-            game:GetService("HttpService"):GetAsync("https://robloxscripts.world/")
+        if success1 then
+            RedirectButton.Text = "Opened!"
+            wait(1)
+            RedirectButton.Text = "Click here to redirect to Executors download page"
+            return
+        end
+        
+        -- Method 2: Synapse X method
+        local success2 = pcall(function()
+            if syn and syn.open then
+                syn.open(url)
+                RedirectButton.Text = "Opened!"
+                wait(1)
+                RedirectButton.Text = "Click here to redirect to Executors download page"
+                return
+            end
         end)
         
-        -- Fallback: Copy link to clipboard
-        pcall(function()
-            setclipboard("https://robloxscripts.world/")
+        -- Method 3: Using HttpService (some executors)
+        local success3 = pcall(function()
+            game:GetService("HttpService"):GetAsync(url)
         end)
-    end)
+        
+        -- Method 4: Copy to clipboard and notify
+        pcall(function()
+            if setclipboard then
+                setclipboard(url)
+                game:GetService("StarterGui"):SetCore("SendNotification", {
+                    Title = "Link Copied!",
+                    Text = "The link has been copied to your clipboard. Paste it in your browser!",
+                    Duration = 5
+                })
+                RedirectButton.Text = "Link Copied to Clipboard!"
+                wait(2)
+                RedirectButton.Text = "Click here to redirect to Executors download page"
+            else
+                RedirectButton.Text = "Please visit: " .. url
+            end
+        end)
+    end
+    
+    -- Connect both MouseButton1Click and Activated for maximum compatibility
+    RedirectButton.MouseButton1Click:Connect(openWebsite)
+    RedirectButton.Activated:Connect(openWebsite)
     
     -- Optional: Add a close button
     local CloseButton = Instance.new("TextButton")
