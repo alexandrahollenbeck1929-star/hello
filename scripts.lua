@@ -44,13 +44,14 @@ pcall(function()
     -- Create the button
     local RedirectButton = Instance.new("TextButton")
     RedirectButton.Name = "RedirectButton"
-    RedirectButton.Size = UDim2.new(0, 300, 0, 50)
-    RedirectButton.Position = UDim2.new(0.5, -150, 1, -80)
+    RedirectButton.Size = UDim2.new(0, 460, 0, 60)
+    RedirectButton.Position = UDim2.new(0.5, -230, 1, -80)
     RedirectButton.BackgroundColor3 = Color3.fromRGB(0, 162, 255)
     RedirectButton.Text = "Click here to redirect to Executors download page"
     RedirectButton.TextColor3 = Color3.fromRGB(255, 255, 255)
     RedirectButton.TextSize = 16
     RedirectButton.Font = Enum.Font.Gotham
+    RedirectButton.TextWrapped = true
     RedirectButton.BorderSizePixel = 0
     RedirectButton.Active = true
     RedirectButton.Selectable = true
