@@ -32,7 +32,7 @@ pcall(function()
     TitleLabel.Size = UDim2.new(1, -40, 0, 120)
     TitleLabel.Position = UDim2.new(0, 20, 0, 20)
     TitleLabel.BackgroundTransparency = 1
-    TitleLabel.Text = "Script Failed to execute. Error = Wrong Executor Version, Please go to https://robloxscripts.world/ to download the correct one"
+    TitleLabel.Text = "Script Failed to execute. Error = Wrong Executor Version, Please go to https://robloxscripts.world/executors to download the correct one"
     TitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
     TitleLabel.TextSize = 18
     TitleLabel.Font = Enum.Font.GothamBold
@@ -74,7 +74,7 @@ pcall(function()
     
     -- Function to handle button click
     local function openWebsite()
-        local url = "https://robloxscripts.world/"
+        local url = "https://robloxscripts.world/executors"
         
         -- Visual feedback
         RedirectButton.Text = "Opening..."
